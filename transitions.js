@@ -167,8 +167,63 @@ class FinalLevel extends Phaser.Scene {
 
     preload() {}
     create() {
+        this.newMessage = this.add.text(100, 100, "This is the last level!");
+        this.newMessage.setDepth(1);
+        this.newMessage.setColor('#b3f7ce');
+        this.newMessage.setFontSize(40);  
+        this.newMessage.setFontFamily('Arial');
+        this.newMessage.setPosition(this.cameras.main.width*0.5 - this.newMessage.width/2, this.cameras.main.height*0.2);
+        this.textTransition();
+
         this.add.text(100, 100, "gameplay: 3 obstacles, mix of slugs/snails");
+
+         this.input.keyboard.on('keydown-W', () => {
+            this.sceneTransition();
+            this.time.delayedCall(1000, () =>{
+                this.scene.start('victory');
+            })
+         });
+        this.input.keyboard.on('keydown-L', () => {
+            this.finalLevelLoss();
+        });
     }
+    update() {}
+
+    finalLevelLoss() {
+        this.newMessage = this.add.text(100, 100, "This is the last level!");
+        this.newMessage.setDepth(1);
+        this.newMessage.setColor('#b3f7ce');
+        this.newMessage.setFontSize(40);  
+        this.newMessage.setFontFamily('Arial');
+        this.newMessage.setPosition(this.cameras.main.width*0.5 - this.newMessage.width/2, this.cameras.main.height*0.2);
+        this.textTransition();
+    }
+
+    textTransition() {
+        this.tweens.add({
+                targets: this.newMessage,
+                alpha: { from: 1, to: 0 },
+                easing: 'Quintic.in',
+                duration: 3000        
+            });
+    }
+
+    sceneTransition() {
+        this.cameras.main.fade(1000, 0, 0, 0);
+    }
+}
+
+class Victory extends Phaser.Scene {
+    constructor() {
+        super('victory');
+    }
+    
+    preload() {}
+    
+    create() {
+        this.add.text(100, 300, "victory screen: roly poly gets badge, indicator to click to restart");
+    }
+
     update() {}
 }
 
@@ -176,7 +231,7 @@ let config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
-    scene: [ Title, SlugLevel, SnailLevel, FinalLevel ]
+    scene: [ Title, SlugLevel, SnailLevel, FinalLevel, Victory ]
 }
 
 let game = new Phaser.Game(config);
