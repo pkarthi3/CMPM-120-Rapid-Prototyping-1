@@ -97,11 +97,26 @@ class SnailLevel extends Phaser.Scene {
     }
     create() {
         this.add.text(400, 300, "gameplay: two snails");
+
+        this.newMessage = this.add.text(100, 100, "Watch out for snails!");
+        this.newMessage.setDepth(1);
+        this.newMessage.setColor('#b3f7ce');
+        this.newMessage.setFontSize(40);  
+        this.newMessage.setFontFamily('Arial');
+        this.newMessage.setPosition(this.cameras.main.width*0.5 - this.newMessage.width/2, this.cameras.main.height*0.2);
+        this.textTransition();
+
         this.input.keyboard.on('keydown-W', () => {
-            snailLevelWin();
+            this.snailLevelWin();
+            this.time.delayedCall(3000, () => {
+                this.sceneTransition();
+                this.time.delayedCall(1000, () => {
+                    this.scene.start('finalLevel');
+                });
+            });
         });
         this.input.keyboard.on('keydown-L', () => {
-            snailLevelLoss();
+            this.snailLevelLoss();
         });
         
         
@@ -145,12 +160,23 @@ class SnailLevel extends Phaser.Scene {
     }
 }
 
+class FinalLevel extends Phaser.Scene {
+    constructor() {
+        super('finalLevel');
+    }
+
+    preload() {}
+    create() {
+        this.add.text(100, 100, "gameplay: 3 obstacles, mix of slugs/snails");
+    }
+    update() {}
+}
 
 let config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
-    scene: [ Title, SlugLevel, SnailLevel ]
+    scene: [ Title, SlugLevel, SnailLevel, FinalLevel ]
 }
 
 let game = new Phaser.Game(config);
