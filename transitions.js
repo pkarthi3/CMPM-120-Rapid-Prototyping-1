@@ -221,10 +221,38 @@ class Victory extends Phaser.Scene {
     preload() {}
     
     create() {
-        this.add.text(100, 300, "victory screen: roly poly gets badge, indicator to click to restart");
+        this.newMessage = this.add.text(100, 100, "The roly poly gets a badge!");
+        this.newMessage.setDepth(1);
+        this.newMessage.setColor('#b3f7ce');
+        this.newMessage.setFontSize(40);  
+        this.newMessage.setFontFamily('Arial');
+        this.newMessage.setPosition(this.cameras.main.width*0.5 - this.newMessage.width/2, this.cameras.main.height*0.2);
+        this.textTransition();
+
+        this.add.text(25, 300, "victory screen: roly poly gets badge, indicator to click to return to title");
+
+        this.input.once('pointerdown', () => {
+            this.sceneTransition();
+            this.time.delayedCall(1000, () => {
+                this.scene.start('title');
+            });
+        });
     }
 
     update() {}
+
+    textTransition() {
+        this.tweens.add({
+            targets: this.newMessage,
+            alpha: { from: 1, to: 0 },
+            easing: 'Quintic.in',
+            duration: 3000        
+        });
+    }
+    
+    sceneTransition() {
+        this.cameras.main.fade(1000, 0, 0, 0);
+    }
 }
 
 let config = {
