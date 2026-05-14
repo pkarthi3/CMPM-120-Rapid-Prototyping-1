@@ -1,0 +1,14 @@
+Title screen:
+Title: Uses text to convey the exact title text "Roly Poly: To the End"
+Theme: Uses visual assets to convey the themes of the game (fairies / roly polies / snails).
+Aliveness: Some sort of animation should be used to make the scene feel alive and responsive (e.g. tween-based movement)
+Controls: It should be very obvious (even without the ability to read) that you tap/click the screen to begin play.
+Message card: Exact text "Watch out for slugs!", making sure the player knows learns that they must tap the screen to advance the game.
+Gameplay: The player (a cute roly poly) must run from left to right, jumping over two slugs that slowly move from right to left. If the roly poly collides with a slug, the game should return to the title screen after a brief delay where the user can come to understand how they failed. The collision checking should be quite generous (e.g. it's bad to walk right into a slug, but you can pass through a slug while in the middle of a jump).
+Message card: Exact text "That's good work!"
+Message card: Exact text "Watch out for snails!"
+Gameplay: Like the first gameplay scene except the obstacles are now two snails (with a base shaped like the slug but a larger shell on top). The snails might move faster than slugs if it feels like a better design, but collision checking should still be very generous to the player.
+Message card: Exact text "Good job!"
+Message card: Exact text "This is the last level!"
+Gameplay: Like the earlier scenes, but now there are three obstacles instead of two, and the scene somehow uses both snails and slugs.
+Message card: Exact text "The roly poly gets a badge!"
