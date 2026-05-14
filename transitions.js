@@ -1,3 +1,28 @@
+class Title extends Phaser.Scene {
+    constructor() {
+        super('title');
+    }
+
+    preload() {}
+
+    create() {
+        this.add.text(100, 100, "title screen: game title/illustration, indicator to click to continue");
+        this.input.once('pointerdown', () => {
+            this.sceneTransition();
+            this.time.delayedCall(1000, () => {
+                this.scene.start('slugLevel');
+            });
+        });
+    }
+
+    update() {}
+
+    sceneTransition() {
+        this.cameras.main.fade(1000, 0, 0, 0);
+    }
+}
+
+
 class SlugLevel extends Phaser.Scene {
     constructor() {
         super('slugLevel');
@@ -82,11 +107,21 @@ class SnailLevel extends Phaser.Scene {
 
     snailLevelWin() {
         this.newMessage = this.add.text(100, 100, "Good job!");
+        this.newMessage.setDepth(1);
+        this.newMessage.setColor('#b3f7ce');
+        this.newMessage.setFontSize(40);  
+        this.newMessage.setFontFamily('Arial');
+        this.newMessage.setPosition(this.cameras.main.width*0.5 - this.newMessage.width/2, this.cameras.main.height*0.2);
         this.textTransition();
     }
 
     snailLevelLoss() {
         this.newMessage = this.add.text(100, 100, "Watch out for snails!");
+        this.newMessage.setDepth(1);
+        this.newMessage.setColor('#b3f7ce');
+        this.newMessage.setFontSize(40);  
+        this.newMessage.setFontFamily('Arial');
+        this.newMessage.setPosition(this.cameras.main.width*0.5 - this.newMessage.width/2, this.cameras.main.height*0.2);
         this.textTransition();
     }
 
@@ -109,7 +144,7 @@ let config = {
     type: Phaser.AUTO,
     width: 800,
     height: 600,
-    scene: [ SlugLevel, SnailLevel ]
+    scene: [ Title, SlugLevel, SnailLevel ]
 }
 
 let game = new Phaser.Game(config);
