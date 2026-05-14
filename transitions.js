@@ -35,6 +35,12 @@ class SlugLevel extends Phaser.Scene {
         
         this.input.keyboard.on('keydown-W', (event) => {
             this.slugLevelWin();
+            this.time.delayedCall(3000, () => {
+                this.sceneTransition();
+                this.time.delayedCall(1000, () => {
+                    this.scene.start('snailLevel');
+                });
+            });
         });
 
         this.input.keyboard.on('keydown-L', (event) => {
