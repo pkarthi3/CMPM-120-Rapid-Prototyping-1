@@ -31,16 +31,19 @@ class SlugLevel extends Phaser.Scene {
     preload() {}
 
     create() {
-        this.add.text(100, 100, "gameplay: 2 slugs");
+        this.newMessage = this.add.text(0, 0, "Watch out for slugs!");
+        this.newMessage.setDepth(1);
+        this.newMessage.setColor('#b3f7ce');
+        this.newMessage.setFontSize(40);  
+        this.newMessage.setFontFamily('Arial');  
+        this.newMessage.setPosition(this.cameras.main.width*0.5 - this.newMessage.width/2, this.cameras.main.height*0.2);
+        this.textTransition();
+
+
+        this.add.text(100, 50, "gameplay: 2 slugs\nW to simulate win, L for loss");
         
         this.input.keyboard.on('keydown-W', (event) => {
             this.slugLevelWin();
-            this.time.delayedCall(3000, () => {
-                this.sceneTransition();
-                this.time.delayedCall(1000, () => {
-                    this.scene.start('snailLevel');
-                });
-            });
         });
 
         this.input.keyboard.on('keydown-L', (event) => {
@@ -59,6 +62,11 @@ class SlugLevel extends Phaser.Scene {
         this.newMessage.setPosition(this.cameras.main.width*0.5 - this.newMessage.width/2, this.cameras.main.height*0.2);
 
         this.textTransition();
+        
+        this.time.delayedCall(2000, () => {
+            this.sceneTransition();
+            this.scene.start('snailLevel');
+        });
     }
 
     slugLevelLoss() {
@@ -70,6 +78,9 @@ class SlugLevel extends Phaser.Scene {
         this.newMessage.setPosition(this.cameras.main.width*0.5 - this.newMessage.width/2, this.cameras.main.height*0.2);
 
         this.textTransition();
+        this.sceneTransition();
+
+        this.scene.start('slugLevel');
     }
 
     textTransition() {
@@ -77,7 +88,7 @@ class SlugLevel extends Phaser.Scene {
                 targets: this.newMessage,
                 alpha: { from: 1, to: 0 },
                 easing: 'Quintic.in',
-                duration: 3000        
+                duration: 2000        
             });
     }
 
@@ -96,7 +107,7 @@ class SnailLevel extends Phaser.Scene {
 
     }
     create() {
-        this.add.text(400, 300, "gameplay: two snails");
+        this.add.text(100, 50, "gameplay: two snails\nW to simulate win, L for loss");
 
         this.newMessage = this.add.text(100, 100, "Watch out for snails!");
         this.newMessage.setDepth(1);
@@ -108,12 +119,6 @@ class SnailLevel extends Phaser.Scene {
 
         this.input.keyboard.on('keydown-W', () => {
             this.snailLevelWin();
-            this.time.delayedCall(3000, () => {
-                this.sceneTransition();
-                this.time.delayedCall(1000, () => {
-                    this.scene.start('finalLevel');
-                });
-            });
         });
         this.input.keyboard.on('keydown-L', () => {
             this.snailLevelLoss();
@@ -134,6 +139,9 @@ class SnailLevel extends Phaser.Scene {
         this.newMessage.setFontFamily('Arial');
         this.newMessage.setPosition(this.cameras.main.width*0.5 - this.newMessage.width/2, this.cameras.main.height*0.2);
         this.textTransition();
+        this.sceneTransition();
+
+        this.scene.start('finalLevel');
     }
 
     snailLevelLoss() {
@@ -144,6 +152,9 @@ class SnailLevel extends Phaser.Scene {
         this.newMessage.setFontFamily('Arial');
         this.newMessage.setPosition(this.cameras.main.width*0.5 - this.newMessage.width/2, this.cameras.main.height*0.2);
         this.textTransition();
+        this.sceneTransition();
+
+        this.scene.start('snailLevel');
     }
 
     textTransition() {
@@ -151,7 +162,7 @@ class SnailLevel extends Phaser.Scene {
                 targets: this.newMessage,
                 alpha: { from: 1, to: 0 },
                 easing: 'Quintic.in',
-                duration: 3000        
+                duration: 2000        
             });
     }
 
@@ -175,11 +186,11 @@ class FinalLevel extends Phaser.Scene {
         this.newMessage.setPosition(this.cameras.main.width*0.5 - this.newMessage.width/2, this.cameras.main.height*0.2);
         this.textTransition();
 
-        this.add.text(100, 100, "gameplay: 3 obstacles, mix of slugs/snails");
+        this.add.text(100, 50, "gameplay: 3 obstacles, mix of slugs/snails\nW to simulate win, L for loss");
 
          this.input.keyboard.on('keydown-W', () => {
             this.sceneTransition();
-            this.time.delayedCall(1000, () =>{
+            this.time.delayedCall(2000, () =>{
                 this.scene.start('victory');
             })
          });
@@ -197,6 +208,8 @@ class FinalLevel extends Phaser.Scene {
         this.newMessage.setFontFamily('Arial');
         this.newMessage.setPosition(this.cameras.main.width*0.5 - this.newMessage.width/2, this.cameras.main.height*0.2);
         this.textTransition();
+
+        this.scene.start('finalLevel');
     }
 
     textTransition() {
@@ -246,7 +259,7 @@ class Victory extends Phaser.Scene {
             targets: this.newMessage,
             alpha: { from: 1, to: 0 },
             easing: 'Quintic.in',
-            duration: 3000        
+            duration: 2000        
         });
     }
     
